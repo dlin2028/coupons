@@ -8,7 +8,7 @@ We developed a model that predicts the supply and demand for groceries and imple
 
 ## How We Built It
 
-###Coupons Platform
+### Coupons Platform
 The front end application was built using Next.js and TailwindCSS. The home page contacts the Node.JS backend to retrieve the coupons (stored locally for now) and display them in tiles. It uses the front end for filtering and searching. The suggest deals page contacts the Node.JS backend which then contacts the Square API. It then pulls the inventory and catalog data in order to calculate the suggested prices. This then contacts a python subtask to do the actual calculation. Last, it displays this information in tiles (Note that currently it is set up to display sample data. This is because we were not able to successfully upload enough data to the Square API for demonstration purposes). The checkout page is mostly static website, but it checks for the coupon code banana60 to apply the discount, and displays the checkbox to update the price correctly.
 
 
@@ -50,16 +50,20 @@ In order to calculate the expected sales in quantity at the discounted price, we
 ![Discount Impact on Sales Data Points](public/images/multiplier.png)
 
 ## Challenges We Ran Into
-Currently, the Square API only lets inventory changes be logged in the past 24 hours. This makes it difficult to upload a meaningful dataset for testing the discounting algorithm. Therefore we instead opted to use our own dataset stored locally for now, but make sure that it is fully compatible with the Square API. Addutionally, the Square API does not support the creation of coupon codes, requiring store owners to manually input discounts. This limitation presents a significant challenge in automating the discount process.
+Currently, the Square API only lets new inventory changes be logged in the past 24 hours. This makes it difficult to upload a meaningful dataset for testing the discounting algorithm. To overcome this obstacle, we opted for a temporary solution of utilizing a separate, locally stored dataset. However, we ensured this data aligns seamlessly with the structure and format expected by the Square API to facilitate a smooth transition when the API capabilities are expanded.
+
+Another challenge arose from the Square API's lack of support for automated coupon code generation. Currently, store owners need to manually input any discounts offered. This limitation significantly hinders the automation of the discount application process, which was a core aspect of our vision for Square Coupons. We are actively seeking workarounds or future updates to the Square API that would allow for automatic coupon creation and implementation. 
 
 ## Accomplishments That We're Proud Of
-We are extremely proud of the discounting algorithm. We hope that it can be used to do real good.
+The heart of Square Coupons lies in the discounting algorithm, and we're immensely proud of its development. This algorithm tackles the crucial task of predicting both product supply and demand within the grocery store environment. By factoring in these considerations, the algorithm calculates an optimal discount price that maximizes revenue for the store while minimizing food waste. This innovative approach not only benefits businesses but also contributes to a larger societal good by reducing food spoilage. We believe this algorithm has the potential to be a powerful tool in addressing the global issue of food waste.
 
 ## What We Learned
-We gained experience in development using REST Apis, React, and Node.JS. This also gave us an insight into the grocery retail business.
+Throughout the development of Square Coupons, we gained valuable experience working with various technologies. We honed our skills in utilizing REST APIs, specifically the Square API, to integrate with Point-of-Sale systems. Additionally, we deepened our understanding of frameworks like React and Node.JS, which were instrumental in building the front-end and back-end functionalities of the application. This project also provided us with a unique opportunity to gain valuable insights into the complexities of the grocery retail industry. Understanding these intricacies was crucial in tailoring the features of Square Coupons to address the specific needs and challenges faced by grocery stores.
 
 ## What's Next for Square Coupons
-We hope to see Square Coupons more closely integrated with Square API as right now we were limited by time and there were some limitations to the API as it was likely not designed for an app like ours in mind.
+We envision a future where Square Coupons becomes seamlessly integrated with the Square API. The current limitations we encountered highlight the need for API advancements that cater to applications like ours. Ideally, we hope to see functionalities that allow for historical data access beyond 24 hours and the ability to automatically generate and implement discount coupons. We believe that closer collaboration and continued development of the Square API will unlock the full potential of Square Coupons, enabling it to make a significant impact on food waste reduction and grocery store efficiency.
+
+Square Coupons isn't Square-exclusive! We're looking to collaborate with Block, Inc. (formerly Square) to integrate with Cash App. This widens our reach to Cash App's massive user base, potentially reducing food waste further. Imagine the ease of using Cash App for discounted groceries! Integrating Cash App requires evaluation, but the Block ecosystem holds immense potential. We're also exploring Cash App Boosts and marketing to maximize Square Coupons' impact within Block.
 
 ## Getting Started
 
@@ -76,7 +80,5 @@ bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
