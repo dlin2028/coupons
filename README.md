@@ -7,7 +7,7 @@ The UNEP Report clarifies the difference between food waste and food loss. Food 
 We developed a model that predicts the supply and demand for groceries and implemented a discounting algorithm to maximize revenue while minimizing losses. This algorithm enhances demand by offering discounts and calculates the optimal discount rate to both maximize revenue and minimize surplus by the expiry date. Moreover, we have integrated a feature that allows discounts to be directed to local food charities, supporting the use of expired groceries.
 
 ## How We Built It
-The application was built using React and Node.js for the user interface, with Python powering the advanced discounting algorithm. This algorithm analyzes batch inventory data from the Square inventories API and models potential changes. It then generates discount suggestions that can be seamlessly integrated into the existing discounts page. More details on the discounting algorithm can be found below
+The application was built using React and Node.js for the user interface, with Python powering the advanced discounting algorithm. This algorithm analyzes batch inventory data from the Square inventories API and models potential changes. It then generates discount suggestions that can be seamlessly integrated into the existing discounts page. More details on the discounting algorithm can be found below.
 
 ## Challenges We Ran Into
 Currently, the Square API does not support the creation of coupon codes, requiring store owners to manually input discounts. This limitation presents a significant challenge in automating the discount process.
