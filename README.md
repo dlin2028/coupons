@@ -7,21 +7,10 @@ The UNEP Report clarifies the difference between food waste and food loss. Food 
 We developed a model that predicts the supply and demand for groceries and implemented a discounting algorithm to maximize revenue while minimizing losses. This algorithm enhances demand by offering discounts and calculates the optimal discount rate to both maximize revenue and minimize surplus by the expiry date. Moreover, we have integrated a feature that allows discounts to be directed to local food charities, supporting the use of expired groceries.
 
 ## How We Built It
-The application was built using React and Node.js for the user interface, with Python powering the advanced discounting algorithm. This algorithm analyzes batch inventory data from the Square inventories API and models potential changes. It then generates discount suggestions that can be seamlessly integrated into the existing discounts page. More details on the discounting algorithm can be found below.
 
-## Challenges We Ran Into
-Currently, the Square API does not support the creation of coupon codes, requiring store owners to manually input discounts. This limitation presents a significant challenge in automating the discount process.
+###Coupons Platform
+The front end application was built using Next.js and TailwindCSS. The home page contacts the Node.JS backend to retrieve the coupons (stored locally for now) and display them in tiles. It uses the front end for filtering and searching. The suggest deals page contacts the Node.JS backend which then contacts the Square API. It then pulls the inventory and catalog data in order to calculate the suggested prices. This then contacts a python subtask to do the actual calculation. Last, it displays this information in tiles (Note that currently it is set up to display sample data. This is because we were not able to successfully upload enough data to the Square API for demonstration purposes). The checkout page is mostly static website, but it checks for the coupon code banana60 to apply the discount, and displays the checkbox to update the price correctly.
 
-## Accomplishments That We're Proud Of
-*(This section is pending details about specific achievements or milestones reached during the project.)*
-
-## What We Learned
-*(This section should include insights, techniques learned, or understanding gained during the project.)*
-
-## What's Next for Square Coupons
-*(This section should outline future plans for the development and enhancement of the Square Coupons feature.)*
-
-## Miscellaneous
 
 ### Discounting Algorithm
 Calculating the suggested discounts is no trivial task. For a given product, the algorithm first compares the expected sales by expiration (`expected_sales_by_expiration`) to the current count of the product that is going to expire (`count_exp`). If `expected_sales_by_expiration` is greater than `count_exp`, then there is no need to discount the product. Otherwise, we need to consider discounting the product in question. Since `expected_sales_by_expiration` and `count_exp` are not explicitly provided by the Square API, we need to deduce these values from the data we do have access to. See **Estimating expected_sales_by_expiration** and **Estimating count_exp** below.
@@ -60,8 +49,17 @@ In order to calculate the expected sales in quantity at the discounted price, we
 
 ![Discount Impact on Sales Data Points](public/images/multiplier.png)
 
+## Challenges We Ran Into
+Currently, the Square API only lets inventory changes be logged in the past 24 hours. This makes it difficult to upload a meaningful dataset for testing the discounting algorithm. Therefore we instead opted to use our own dataset stored locally for now, but make sure that it is fully compatible with the Square API. Addutionally, the Square API does not support the creation of coupon codes, requiring store owners to manually input discounts. This limitation presents a significant challenge in automating the discount process.
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Accomplishments That We're Proud Of
+We are extremely proud of the discounting algorithm. We hope that it can be used to do real good.
+
+## What We Learned
+We gained experience in development using REST Apis, React, and Node.JS. This also gave us an insight into the grocery retail business.
+
+## What's Next for Square Coupons
+We hope to see Square Coupons more closely integrated with Square API as right now we were limited by time and there were some limitations to the API as it was likely not designed for an app like ours in mind.
 
 ## Getting Started
 
@@ -82,18 +80,3 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
