@@ -28,7 +28,7 @@ Calculating the suggested discounts is no trivial task. For a given product, the
 
 After identifying that a store can benefit from discounting a given product, we iterate through each potential discounted price from 0% off to 100% off. For each percent discount, we find the expected revenue by multiplying the discounted price and the expected sales in quantity at the discounted price. For an explanation on how the latter is determined, see **Calculating Expected Sales at Discounted Price** below. We see at which percent discount we maximize the revenue and suggest the percent discount to the user, the shop.
 
-![Revenue Optimization Graph](blob:https://devpost.com/524ec369-a699-426c-bb86-574cf69d79ad)
+![Revenue Optimization Graph](public/images/main.png)
 *The chart displays where revenue is maximized for the example data.*
 
 ## Estimating expected_sales_by_expiration
@@ -43,7 +43,7 @@ Since `dte` is not explicitly provided by the Square API, days to expiration is 
 
 Next, we look at past data to extrapolate `dte`. In the 6 most recent restock events (which we take from the Square API), we average days past between loss events and their respective most recent restock event. These averages are quadratically weighted averages based on amount lost per loss event. We quadratically weight averages to further attenuate the smaller losses, which concurs with the third assumption. The effect of quadratically weighting the losses to obtain the average number of days since the last restock can be shown in the example below.
 
-![Example of Weighted Average Calculation](URL-to-example)
+![Example of Weighted Average Calculation](public/images/)
 *This example is only for the time between two restock events. In practice, we average the weighted averages among each period of consecutive restock events to obtain the average.*
 
 We take this value and subtract the number of days since the last restock event. Since the difference can be negative, we apply the modulus function to the difference with the average number of days between consecutive restock events. This new value is `dte`. The modulus function can be used because the number of days a product takes to expire since its delivery to the store can be longer than the number of days between two or more consecutive restock events. Applying the modulus function covers these cases and is appropriate for the method we calculate `dte`. Note that this relies on the first assumption.
@@ -58,7 +58,7 @@ Note that for a given product, the current inventory count is not a sufficient e
 
 In order to calculate the expected sales in quantity at the discounted price, we need some insight as to the effect of discounts on sales. In order to create a model for a general product, we mined the internet for data. We also had to clean the data so that variables were consistent. For example, 75% of the original price should translate to 25% off and a 67% increase in sales should be a multiplier of 1.67. Any suggested formulas were turned into a set of 50 data points. We tried to diversify the products being studied to create a more general model for simplicity. Once the data points were plotted we were able to formulate an equation that models the general effect of discounts on sales.
 
-![Discount Impact on Sales Data Points](output.png)
+![Discount Impact on Sales Data Points](public/images/output.png)
 
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
