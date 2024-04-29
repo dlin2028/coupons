@@ -23,7 +23,7 @@ Currently, the Square API does not support the creation of coupon codes, requiri
 
 ## Miscellaneous
 
-## Discounting Algorithm
+### Discounting Algorithm
 Calculating the suggested discounts is no trivial task. For a given product, the algorithm first compares the expected sales by expiration (`expected_sales_by_expiration`) to the current count of the product that is going to expire (`count_exp`). If `expected_sales_by_expiration` is greater than `count_exp`, then there is no need to discount the product. Otherwise, we need to consider discounting the product in question. Since `expected_sales_by_expiration` and `count_exp` are not explicitly provided by the Square API, we need to deduce these values from the data we do have access to. See **Estimating expected_sales_by_expiration** and **Estimating count_exp** below.
 
 After identifying that a store can benefit from discounting a given product, we iterate through each potential discounted price from 0% off to 100% off. For each percent discount, we find the expected revenue by multiplying the discounted price and the expected sales in quantity at the discounted price. For an explanation on how the latter is determined, see **Calculating Expected Sales at Discounted Price** below. We see at which percent discount we maximize the revenue and suggest the percent discount to the user, the shop.
@@ -31,7 +31,7 @@ After identifying that a store can benefit from discounting a given product, we 
 ![Revenue Optimization Graph](public/images/main.png)
 *The chart displays where revenue is maximized for the example data.*
 
-## Estimating expected_sales_by_expiration
+#### Estimating expected_sales_by_expiration
 
 We estimate `expected_sales_by_expiration` by multiplying the remaining days to expiration (`dte`) and the expected sales in quantity per day of the soon to expire count.
 
@@ -50,11 +50,11 @@ Note that the weighted mean date is closer to the date of the largest loss event
 
 To calculate the expected sales in quantity per day of the soon to expire count, we get sales data from the Square API. We take all sales made from the last 2 times `dte` days and get an average sales per day. The average is calculated by weighting the most recent sales more heavily as more recent data is more relevant to the sellability of a product.
 
-## Estimate count_exp
+#### Estimate count_exp
 
 Note that for a given product, the current inventory count is not a sufficient estimate for `count_exp` as the inventory may have a mix of soon to expire items and recently restocked items. To calculate the `count_exp`, we simply calculate the average quantity loss per consecutive restock events across the last 6 restock events. To do this, we obtain the data from the Square API.
 
-## Calculating Expected Sales at Discounted Price
+#### Calculating Expected Sales at Discounted Price
 
 In order to calculate the expected sales in quantity at the discounted price, we need some insight as to the effect of discounts on sales. In order to create a model for a general product, we mined the internet for data. We also had to clean the data so that variables were consistent. For example, 75% of the original price should translate to 25% off and a 67% increase in sales should be a multiplier of 1.67. Any suggested formulas were turned into a set of 50 data points. We tried to diversify the products being studied to create a more general model for simplicity. Once the data points were plotted we were able to formulate an equation that models the general effect of discounts on sales.
 
